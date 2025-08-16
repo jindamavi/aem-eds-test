@@ -13,7 +13,7 @@
 (function () {
   const { call } = Function.prototype;
   Function.prototype.call = function () {
-    window.console.log(this, arguments); // Here you can do whatever actions you want
+    window.console.log(this.name, arguments); // Here you can do whatever actions you want
     return call.apply(this, arguments);
   };
 }());
