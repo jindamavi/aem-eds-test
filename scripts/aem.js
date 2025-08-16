@@ -303,12 +303,12 @@ function getMetadata(name, doc = document) {
  * @returns {Element} The picture element
  */
 function createOptimizedPicture(
-	console.log('aem - createOptimizedPicture')
   src,
   alt = '',
   eager = false,
   breakpoints = [{ media: '(min-width: 600px)', width: '2000' }, { width: '750' }],
 ) {
+  console.log('aem - createOptimizedPicture')
   const url = new URL(src, window.location.href);
   const picture = document.createElement('picture');
   const { pathname } = url;
