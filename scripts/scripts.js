@@ -18,6 +18,7 @@ import {
  * @param {Element} main The container element
  */
 function buildHeroBlock(main) {
+  window.console.log('scripts - buildHeroBlock');
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
   // eslint-disable-next-line no-bitwise
@@ -32,6 +33,7 @@ function buildHeroBlock(main) {
  * load fonts.css and set a session storage flag
  */
 async function loadFonts() {
+  window.console.log('scripts - loadFonts');
   await loadCSS(`${window.hlx.codeBasePath}/styles/fonts.css`);
   try {
     if (!window.location.hostname.includes('localhost')) sessionStorage.setItem('fonts-loaded', 'true');
@@ -45,6 +47,7 @@ async function loadFonts() {
  * @param {Element} main The container element
  */
 function buildAutoBlocks(main) {
+  window.console.log('scripts - buildAutoBlocks');
   try {
     buildHeroBlock(main);
   } catch (error) {
@@ -59,6 +62,7 @@ function buildAutoBlocks(main) {
  */
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
+  window.console.log('scripts - decorateMain');
   // hopefully forward compatible button decoration
   decorateButtons(main);
   decorateIcons(main);
@@ -72,6 +76,7 @@ export function decorateMain(main) {
  * @param {Element} doc The container element
  */
 async function loadEager(doc) {
+  window.console.log('scripts - loadEager');
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
   const main = doc.querySelector('main');
@@ -96,6 +101,7 @@ async function loadEager(doc) {
  * @param {Element} doc The container element
  */
 async function loadLazy(doc) {
+  window.console.log('scripts - loadLazy');
   const main = doc.querySelector('main');
   await loadSections(main);
 
@@ -115,12 +121,14 @@ async function loadLazy(doc) {
  * without impacting the user experience.
  */
 function loadDelayed() {
+  window.console.log('scripts - loadDelayed');
   // eslint-disable-next-line import/no-cycle
   window.setTimeout(() => import('./delayed.js'), 3000);
   // load anything that can be postponed to the latest here
 }
 
 async function loadPage() {
+  window.console.log('scripts - loadPage');
   await loadEager(document);
   await loadLazy(document);
   loadDelayed();

@@ -10,16 +10,11 @@
  * governing permissions and limitations under the License.
  */
 /* eslint-disable */
-(function () {
-  const { call } = Function.prototype;
-  Function.prototype.call = function () {
-    window.console.log(this.name, arguments); // Here you can do whatever actions you want
-    return call.apply(this, arguments);
-  };
-}());
+
 
 /* eslint-env browser */
 function sampleRUM(checkpoint, data) {
+	console.log('aem - sampleRUM')
   // eslint-disable-next-line max-len
   const timeShift = () => (window.performance ? window.performance.now() : Date.now() - window.hlx.rum.firstReadTime);
   try {
@@ -138,6 +133,7 @@ function sampleRUM(checkpoint, data) {
  * Setup block utils.
  */
 function setup() {
+	console.log('aem - setup')
   window.hlx = window.hlx || {};
   window.hlx.RUM_MASK_URL = 'full';
   window.hlx.RUM_MANUAL_ENHANCE = true;
@@ -160,6 +156,7 @@ function setup() {
  */
 
 function init() {
+	console.log('aem - init')
   setup();
   sampleRUM.collectBaseURL = window.origin;
   sampleRUM();
@@ -171,6 +168,7 @@ function init() {
  * @returns {string} The class name
  */
 function toClassName(name) {
+	console.log('aem - toClassName')
   return typeof name === 'string'
     ? name
       .toLowerCase()
@@ -186,6 +184,7 @@ function toClassName(name) {
  * @returns {string} The camelCased name
  */
 function toCamelCase(name) {
+	console.log('aem - toCamelCase')
   return toClassName(name).replace(/-([a-z])/g, (g) => g[1].toUpperCase());
 }
 
@@ -196,6 +195,7 @@ function toCamelCase(name) {
  */
 // eslint-disable-next-line import/prefer-default-export
 function readBlockConfig(block) {
+	console.log('aem - readBlockConfig')
   const config = {};
   block.querySelectorAll(':scope > div').forEach((row) => {
     if (row.children) {
@@ -238,6 +238,7 @@ function readBlockConfig(block) {
  * @param {string} href URL to the CSS file
  */
 async function loadCSS(href) {
+	console.log('aem - loadCSS')
   return new Promise((resolve, reject) => {
     if (!document.querySelector(`head > link[href="${href}"]`)) {
       const link = document.createElement('link');
@@ -258,6 +259,7 @@ async function loadCSS(href) {
  * @param {Object} attrs additional optional attributes
  */
 async function loadScript(src, attrs) {
+	console.log('aem - loadScript')
   return new Promise((resolve, reject) => {
     if (!document.querySelector(`head > script[src="${src}"]`)) {
       const script = document.createElement('script');
@@ -284,6 +286,7 @@ async function loadScript(src, attrs) {
  * @returns {string} The metadata value(s)
  */
 function getMetadata(name, doc = document) {
+	console.log('aem - getMetadata')
   const attr = name && name.includes(':') ? 'property' : 'name';
   const meta = [...doc.head.querySelectorAll(`meta[${attr}="${name}"]`)]
     .map((m) => m.content)
@@ -300,6 +303,7 @@ function getMetadata(name, doc = document) {
  * @returns {Element} The picture element
  */
 function createOptimizedPicture(
+	console.log('aem - createOptimizedPicture')
   src,
   alt = '',
   eager = false,
@@ -342,6 +346,7 @@ function createOptimizedPicture(
  * Set template (page structure) and theme (page styles).
  */
 function decorateTemplateAndTheme() {
+	console.log('aem - decorateTemplateAndTheme')
   const addClasses = (element, classes) => {
     classes.split(',').forEach((c) => {
       element.classList.add(toClassName(c.trim()));
@@ -358,6 +363,7 @@ function decorateTemplateAndTheme() {
  * @param {Element} block the block element
  */
 function wrapTextNodes(block) {
+	console.log('aem - wrapTextNodes')
   const validWrappers = [
     'P',
     'PRE',
@@ -400,6 +406,7 @@ function wrapTextNodes(block) {
  * @param {Element} element container element
  */
 function decorateButtons(element) {
+	console.log('aem - decorateButtons')
   element.querySelectorAll('a').forEach((a) => {
     a.title = a.title || a.textContent;
     if (a.href !== a.textContent) {
@@ -440,6 +447,7 @@ function decorateButtons(element) {
  * @param {string} [alt] alt text to be added to icon
  */
 function decorateIcon(span, prefix = '', alt = '') {
+	console.log('aem - decorateIcon')
   const iconName = Array.from(span.classList)
     .find((c) => c.startsWith('icon-'))
     .substring(5);
@@ -459,6 +467,7 @@ function decorateIcon(span, prefix = '', alt = '') {
  * @param {string} [prefix] prefix to be added to icon the src
  */
 function decorateIcons(element, prefix = '') {
+	console.log('aem - decorateIcons')
   const icons = element.querySelectorAll('span.icon');
   icons.forEach((span) => {
     decorateIcon(span, prefix);
@@ -470,6 +479,7 @@ function decorateIcons(element, prefix = '') {
  * @param {Element} main The container element
  */
 function decorateSections(main) {
+	console.log('aem - decorateSections')
   main.querySelectorAll(':scope > div').forEach((section) => {
     const wrappers = [];
     let defaultContent = false;
@@ -513,6 +523,7 @@ function decorateSections(main) {
  * @param {*} content two dimensional array or string or object of content
  */
 function buildBlock(blockName, content) {
+	console.log('aem - buildBlock')
   const table = Array.isArray(content) ? content : [[content]];
   const blockEl = document.createElement('div');
   // build image block nested div structure
@@ -543,6 +554,7 @@ function buildBlock(blockName, content) {
  * @param {Element} block The block element
  */
 async function loadBlock(block) {
+	console.log('aem - loadBlock')
   const status = block.dataset.blockStatus;
   if (status !== 'loading' && status !== 'loaded') {
     block.dataset.blockStatus = 'loading';
@@ -580,6 +592,7 @@ async function loadBlock(block) {
  * @param {Element} block The block element
  */
 function decorateBlock(block) {
+	console.log('aem - decorateBlock')
   const shortBlockName = block.classList[0];
   if (shortBlockName) {
     block.classList.add('block');
@@ -598,6 +611,7 @@ function decorateBlock(block) {
  * @param {Element} main The container element
  */
 function decorateBlocks(main) {
+	console.log('aem - decorateBlocks')
   main.querySelectorAll('div.section > div > div').forEach(decorateBlock);
 }
 
@@ -607,6 +621,7 @@ function decorateBlocks(main) {
  * @returns {Promise}
  */
 async function loadHeader(header) {
+	console.log('aem - loadHeader')
   const headerBlock = buildBlock('header', '');
   header.append(headerBlock);
   decorateBlock(headerBlock);
@@ -619,6 +634,7 @@ async function loadHeader(header) {
  * @returns {Promise}
  */
 async function loadFooter(footer) {
+	console.log('aem - loadFooter')
   const footerBlock = buildBlock('footer', '');
   footer.append(footerBlock);
   decorateBlock(footerBlock);
@@ -630,6 +646,7 @@ async function loadFooter(footer) {
  * @param {Element} section section element
  */
 async function waitForFirstImage(section) {
+	console.log('aem - waitForFirstImage')
   const lcpCandidate = section.querySelector('img');
   await new Promise((resolve) => {
     if (lcpCandidate && !lcpCandidate.complete) {
@@ -648,6 +665,7 @@ async function waitForFirstImage(section) {
  */
 
 async function loadSection(section, loadCallback) {
+	console.log('aem - loadSection')
   const status = section.dataset.sectionStatus;
   if (!status || status === 'initialized') {
     section.dataset.sectionStatus = 'loading';
@@ -668,6 +686,7 @@ async function loadSection(section, loadCallback) {
  */
 
 async function loadSections(element) {
+	console.log('aem - loadSections')
   const sections = [...element.querySelectorAll('div.section')];
   for (let i = 0; i < sections.length; i += 1) {
     // eslint-disable-next-line no-await-in-loop
