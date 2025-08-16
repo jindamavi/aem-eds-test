@@ -9,6 +9,14 @@
  * OF ANY KIND, either express or implied. See the License for the specific language
  * governing permissions and limitations under the License.
  */
+/* eslint-disable */
+(function () {
+  const { call } = Function.prototype;
+  Function.prototype.call = function () {
+    window.console.log(this, arguments); // Here you can do whatever actions you want
+    return call.apply(this, arguments);
+  };
+}());
 
 /* eslint-env browser */
 function sampleRUM(checkpoint, data) {
